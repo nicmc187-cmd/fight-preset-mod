@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "dev.fightpreset.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["HandledScreenMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

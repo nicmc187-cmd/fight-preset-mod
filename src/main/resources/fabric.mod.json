@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "fight_preset",
+  "version": "${version}",
+  "name": "Fight Preset",
+  "description": "Save PvP inventory layouts and compare them with translucent ghost items.",
+  "authors": ["FightPreset"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["dev.fightpreset.FightPresetClient"]
+  },
+  "mixins": ["fight_preset.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
