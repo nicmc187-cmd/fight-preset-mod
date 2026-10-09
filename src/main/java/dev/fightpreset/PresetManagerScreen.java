@@ -171,33 +171,43 @@ public class PresetManagerScreen extends Screen {
         context.drawTextWithShadow(textRenderer, "H: toggle overlay  |  J: open menu", 8, height - 14, 0xFFB0B0B0);
     }
 
-    @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        int cx = width / 2;
-        if (showIconPicker && mouseY >= 144 && mouseY < 184) {
-            int col = (int) ((mouseX - (cx - 104)) / 36);
-            int row = (int) ((mouseY - 146) / 22);
-            int index = row * 6 + col;
-            if (col >= 0 && col < 6 && index >= 0 && index < ICONS.size()) {
-                customIconField.setText(ICONS.get(index));
-                return true;
-            }
-        }
+  ```java
+@Override
+public boolean mouseClicked(net.minecraft.client.gui.Click click, boolean doubleClick) {
+    double mouseX = click.x();
+    double mouseY = click.y();
+    int cx = width / 2;
 
-        int rowHeight = 22;
-        int visible = Math.max(0, (listBottom - listTop) / rowHeight);
-        for (int i = 0; i < PresetStore.PRESETS.size() && i < visible; i++) {
-            int y = listTop + i * rowHeight;
-            if (mouseX >= cx - 112 && mouseX <= cx + 112 && mouseY >= y && mouseY <= y + 20) {
-                selected = i;
-                var p = PresetStore.PRESETS.get(i);
-                nameField.setText(p.name);
-                customIconField.setText(p.icon);
-                return true;
-            }
+    if (showIconPicker && mouseY >= 144 && mouseY < 184) {
+        int col = (int) ((mouseX - (cx - 104)) / 36);
+        int row = (int) ((mouseY - 146) / 22);
+        int index = row * 6 + col;
+
+        if (col >= 0 && col < 6 && index >= 0 && index < ICONS.size()) {
+            customIconField.setText(ICONS.get(index));
+            return true;
         }
-        return super.mouseClicked(mouseX, mouseY, button);
     }
+
+    int rowHeight = 22;
+    int visible = Math.max(0, (listBottom - listTop) / rowHeight);
+
+    for (int i = 0; i < PresetStore.PRESETS.size() && i < visible; i++) {
+        int y = listTop + i * rowHeight;
+
+        if (mouseX >= cx - 112 && mouseX <= cx + 112
+                && mouseY >= y && mouseY <= y + 20) {
+            selected = i;
+            var p = PresetStore.PRESETS.get(i);
+            nameField.setText(p.name);
+            customIconField.setText(p.icon);
+            return true;
+        }
+    }
+
+    return super.mouseClicked(click, doubleClick);
+}
+```
 
     @Override
     public boolean shouldPause() {
