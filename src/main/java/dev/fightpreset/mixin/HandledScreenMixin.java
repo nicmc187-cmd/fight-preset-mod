@@ -28,8 +28,9 @@ public abstract class HandledScreenMixin {
 
             ItemStack expected = PresetStore.itemFor(preset, index);
             ItemStack actual = slot.getStack();
-            int x = screen.x + slot.x;
-            int y = screen.y + slot.y;
+          HandledScreenAccessor accessor = (HandledScreenAccessor) screen;
+int x = accessor.fightPreset$getX() + slot.x;
+int y = accessor.fightPreset$getY() + slot.y;
 
             if (expected.isEmpty()) {
                 if (!actual.isEmpty()) {
